@@ -4,9 +4,6 @@ const open = require('open');
 const baseConfig = require('./base.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HappyPack = require('happypack');
-const os = require('os');
-const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
 const config = require('./config.js');
 
 const resolvePath = (dir) => {
