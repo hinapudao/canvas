@@ -46,6 +46,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "core-js": "^3.0.1",
+    "raf.js": "0.0.4",
     "vue": "^2.6.10"
   },
   "browserslist": [
