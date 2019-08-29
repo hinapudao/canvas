@@ -82,14 +82,17 @@
             },
             drawSnow () {
                 let ctx = this.ctx;
+                // 清除画布
                 ctx.clearRect(0, 0, this.winWidth, this.winHeight);
 
+                // 绘制指定色值的背景
                 ctx.fillStyle = this.bgColor;
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
                 ctx.rect(0, 0, this.winWidth, this.winHeight);
                 ctx.fill();
 
+                // 遍历绘制雪花
                 ctx.fillStyle = 'rgba(255, 255, 255, .8)';
                 ctx.beginPath();
 
@@ -102,31 +105,39 @@
                 ctx.fill();
                 this.updateCanvas();
             },
+            /**
+             * 更新雪花位置，处理边界情况
+             * @return void
+             */
             updateCanvas () {
+                // 通过一个累加的参数，配合sin和cos函数，实现雪花依次左右飘的效果
                 this.angle += .01;
 
                 for(let i = 0; i < this.nums; i++) {
                     let curParticle = this.particles[i];
+                    // 通过sin函数切换左右飘落方向
                     curParticle.x += Math.sin(this.angle) * 2;
+                    // 通过cos函数配合半径，实现y轴飘落的错落效果，避免所有雪花y轴速度一样的诡异场景
                     curParticle.y += Math.cos(this.angle + curParticle.d) + 1 + curParticle.r / 2;
                     
+                    // 边界判断
                     if (curParticle.x > this.winWidth + this.radius || curParticle.x < -this.radius || curParticle.y > this.winHeight) {
 
-                        if (i % 3 > 0) {
+                        if (i % 3 > 0) { // 超出边界的雪花，先扔2/3到最顶部重新飘
                             this.particles[i] = {
                                 x: Math.random() * this.winWidth,
                                 y: -10,
                                 r: curParticle.r,
                                 d: curParticle.d
                             };
-                        } else if (Math.sin(this.angle) > 0) {
+                        } else if (Math.sin(this.angle) > 0) { // 剩下的1/3，如果雪花正在往右边飘，把它放到左边窗口外的位置
                             this.particles[i] = {
                                 x: -this.radius,
                                 y: Math.random() * this.winHeight,
                                 r: curParticle.r,
                                 d: curParticle.d
                             };
-                        } else {
+                        } else { // 如果正在往左边飘，把它放到右边窗口外的位置
                             this.particles[i] = {
                                 x: this.winWidth + this.radius,
                                 y: Math.random() * this.winHeight,
@@ -139,6 +150,12 @@
 
                 requestAnimationFrame(this.drawSnow);
             },
+            /**
+             * 对当前Canvas截图并下载至本地
+             * @param  {String} id       要下载的canvas id
+             * @param  {String} fileName 要保存到本地的file name
+             * @return void
+             */
             exportCanvasAsPNG (id, fileName) {
                 let canvasElement = document.getElementById(id);
                 let MIME_TYPE = 'image/png';
