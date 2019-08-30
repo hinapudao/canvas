@@ -10,6 +10,10 @@
                 <span>字号</span>
                 <input type="text" v-model="size">
             </div>
+            <div class="item">
+                <span>文字</span>
+                <input type="text" v-model="fonts">
+            </div>
             <div class="download" @click="exportCanvasAsPNG('hacker', 'hacker')">保存截图</div>
         </div>
     </div> 
