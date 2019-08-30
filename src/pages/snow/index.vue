@@ -64,7 +64,6 @@
                 window.addEventListener('resize', this.resetSize);
             },
             resetSize () {
-                let ctx = this.ctx;
                 let winWidth = this.winWidth = window.innerWidth;
                 let winHeight = this.winHeight = window.innerHeight;
                 this.$refs.canvas.width = winWidth;
