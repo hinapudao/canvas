@@ -4,9 +4,7 @@ const glob = require('glob');
 // 获取入口文件
 let entries = (entryPath => {
     let files = {};
-    filesPath = glob.sync(`${entryPath}/**/*.js`, {
-        ignore: [`${entryPath}/**/components/*.js`]
-    });
+    filesPath = glob.sync(`${entryPath}/*/*.js`);
     filesPath.forEach((entry, index) => {
         let chunkName = path.relative(entryPath, entry).replace(/\.js$/i, '');
         files[chunkName] = path.resolve(__dirname, '../', entry);
